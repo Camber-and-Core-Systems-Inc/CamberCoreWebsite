@@ -1,97 +1,108 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Shield,
-  Layers,
-  Globe,
-  Database,
-  Code,
-  BarChart3,
-  ChevronRight,
-  ArrowRight,
-  CheckCircle2,
-  MapPin,
-} from "lucide-react";
+import FeaturedProjectsCarousel, {
+  type FeaturedProject,
+} from "@/components/FeaturedProjectsCarousel";
+
+export const metadata: Metadata = {
+  title: { absolute: "Home - Camber & Core Systems" },
+};
 
 export default function HomePage() {
   const services = [
     {
-      icon: Layers,
-      tag: "REMOTE SENSING",
       title: "LiDAR & Remote Sensing",
       description:
-        "High-precision elevation data and terrain analysis for accurate decision-making.",
+        "Processing, classification, terrain models, and derivative products for engineering-grade decisions.",
     },
     {
-      icon: Globe,
-      tag: "SPATIAL DATA",
       title: "GIS & Spatial Analysis",
       description:
-        "Custom geographic information systems and advanced spatial analysis workflows.",
+        "Spatial analysis, data modeling, and practical GIS workflows for planning and operations teams.",
     },
     {
-      icon: Database,
-      tag: "EMERGENCY SERVICES",
       title: "NG9-1-1 Readiness",
       description:
-        "NENA-compliant addressing and emergency services infrastructure solutions.",
+        "Addressing, road centerline, and schema validation work aligned to NENA expectations.",
     },
     {
-      icon: Code,
-      tag: "DEVELOPMENT",
       title: "Custom Software",
       description:
-        "Purpose-built geospatial applications tailored to your operational needs.",
+        "Purpose-built web applications, data tools, and internal systems for public-sector teams.",
     },
     {
-      icon: BarChart3,
-      tag: "AUTOMATION",
       title: "Data Automation",
       description:
-        "Intelligent workflows that reduce manual effort and ensure data consistency.",
+        "Repeatable pipelines that reduce manual GIS effort while improving consistency and auditability.",
     },
     {
-      icon: Shield,
-      tag: "QUALITY ASSURANCE",
       title: "Compliance & QA",
       description:
-        "Rigorous validation and certification against government standards.",
+        "Clear validation reports, remediation guidance, and quality controls for operational data.",
     },
   ];
 
-  const projects = [
+  // Homepage spotlights a few projects in the carousel; the full set lives on
+  // /projects. Each href points to an existing anchor on that page.
+  const featuredProjects: FeaturedProject[] = [
     {
-      title: "NG9-1-1 Readiness",
-      client: "District of North Saanich",
-      tags: ["NG9-1-1", "Web App", "Automation"],
-      metric: "Full NENA Compliance",
-    },
-    {
-      title: "Addressing Data Aggregation",
+      slug: "ng911-csrd",
       client: "Columbia Shuswap Regional District",
-      tags: ["NG9-1-1", "Multi-Municipal", "QA/QC"],
-      metric: "5 Municipalities Unified",
+      title: "NG9-1-1 Addressing Aggregation & Automation System",
+      description:
+        "A master NG9-1-1 addressing database that unifies multi-jurisdictional data into a standardized, NENA-aligned SSAP environment with automated ETL and QA/QC.",
+      tags: ["NG9-1-1", "Addressing", "GIS Automation", "ETL", "QA/QC"],
+      meta: [
+        { label: "Service area", value: "Columbia Shuswap RD" },
+        { label: "Deliverable", value: "SSAP master database" },
+        { label: "System type", value: "NENA-aligned ETL" },
+      ],
+      image: "/projects/csrd-hub.png",
+      imageAlt:
+        "CSRD NG9-1-1 Central Database System operations and documentation hub with quick actions and municipal guides.",
+      href: "/projects#ng911-csrd",
     },
     {
-      title: "LiDAR Processing & DEM Generation",
-      client: "North Saanich",
-      tags: ["LiDAR", "DEM", "Terrain Analysis"],
-      metric: "Sub-meter Accuracy",
+      slug: "lidar-dem",
+      client: "District of North Saanich",
+      title: "LiDAR Data Processing & DEM Generation",
+      description:
+        "Full-pipeline LiDAR processing and classification, producing a high-resolution Digital Elevation Model validated against known control points.",
+      tags: ["LiDAR", "DEM Generation", "Point Cloud Processing", "GIS Validation"],
+      meta: [
+        { label: "Service area", value: "District of North Saanich" },
+        { label: "Deliverable", value: "High-resolution DEM" },
+        { label: "System type", value: "LiDAR pipeline" },
+      ],
+      image: "/projects/lidar-dem.png",
+      imageAlt:
+        "3D LiDAR-derived terrain model of North Saanich showing classified ground, vegetation, and a road corridor.",
+      href: "/projects#lidar-dem",
     },
     {
+      slug: "steep-slope",
+      client: "District of North Saanich",
       title: "Steep Slope Map Production",
-      client: "North Saanich",
-      tags: ["Cartography", "Risk Assessment", "GIS"],
-      metric: "Multi-format Delivery",
+      description:
+        "Slope and aspect analysis built on the LiDAR-derived DEM, classified into risk categories and delivered as publication-quality steep-slope maps for land-use planning.",
+      tags: ["Slope Analysis", "Cartography", "Risk Classification", "GIS"],
+      meta: [
+        { label: "Service area", value: "District of North Saanich" },
+        { label: "Deliverable", value: "Steep-slope map series" },
+        { label: "System type", value: "GIS / cartography" },
+      ],
+      image: "/projects/steep-slope.png",
+      imageAlt:
+        "Steep slope map of the Saanich Peninsula highlighting slopes over 30 percent in gold over the road network.",
+      href: "/projects#steep-slope",
     },
   ];
 
   const stats = [
-    { label: "Government Clients", value: "4+" },
-    { label: "Hours Saved per Project", value: "75+" },
-    { label: "Data Accuracy", value: "99%" },
-    { label: "Active Projects", value: "6+" },
+    { value: "4+", label: "Government Clients" },
+    { value: "75+", label: "Hours Saved per Project" },
+    { value: "99%", label: "Data Accuracy" },
+    { value: "6+", label: "Active Projects" },
   ];
 
   const features = [
@@ -101,376 +112,224 @@ export default function HomePage() {
     "Dashboards & Audit Logs",
   ];
 
+  const clients = [
+    {
+      name: "District of North Saanich",
+      src: "/logos/north-saanich.png",
+      width: 300,
+      height: 107,
+      displayHeight: 66,
+    },
+    {
+      name: "Columbia Shuswap Regional District",
+      src: "/logos/csrd.png",
+      width: 1282,
+      height: 776,
+      displayHeight: 92,
+    },
+    {
+      name: "URBAN Systems",
+      src: "/logos/urban-systems.jpg",
+      width: 464,
+      height: 464,
+      displayHeight: 132,
+    },
+  ];
+
   return (
     <>
-      {/* ===== HERO ===== */}
-      <section className="min-h-screen bg-navy-950 topo-pattern relative pt-24 flex flex-col justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/95 to-navy-950 pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-navy-700/40 border border-gold-500/30 rounded-full backdrop-blur-sm">
-            <Shield size={16} className="text-gold-500" />
-            <span className="text-xs font-semibold text-gold-500 tracking-wide">
-              TRUSTED BY BC GOVERNMENT AGENCIES
-            </span>
-          </div>
-
-          {/* H1 */}
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            <span className="text-white">Secure Local</span>{" "}
-            <span className="text-gold-500">Intelligence.</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl mb-8 leading-relaxed">
-            We build the geospatial systems, LiDAR solutions, and custom software
-            that help local governments make smarter decisions and deliver safer
-            communities.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-16">
-            <Link
-              href="/projects"
-              className="inline-flex items-center justify-center px-8 py-3 bg-gold-500 text-navy-950 font-semibold rounded-sm hover:bg-gold-300 transition-colors duration-200"
-            >
-              Explore Our Work
-              <ArrowRight size={18} className="ml-2" />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-sm hover:bg-white/10 transition-colors duration-200"
-            >
-              Get in Touch
-            </Link>
-          </div>
-
-          {/* Stats Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.map((stat, idx) => (
-              <div
-                key={idx}
-                className="px-4 py-4 bg-navy-900/60 border border-navy-700/50 backdrop-blur-sm rounded-sm"
-              >
-                <p className="text-2xl md:text-3xl font-bold text-gold-500 mb-1">
-                  {stat.value}
-                </p>
-                <p className="text-sm text-white/60">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== SERVICES OVERVIEW ===== */}
-      <section className="py-20 bg-offwhite">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Label */}
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-8 h-0.5 bg-gold-500" />
-            <span className="text-sm font-semibold text-gold-500 tracking-wide">
-              WHAT WE DO
-            </span>
-            <div className="w-8 h-0.5 bg-gold-500" />
-          </div>
-
-          {/* Heading */}
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-navy-950 mb-16">
-            Geospatial Services & Solutions
-          </h2>
-
-          {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, idx) => {
-              const IconComponent = service.icon;
-              return (
-                <div
-                  key={idx}
-                  className="group p-8 bg-white border border-lightgray rounded-lg hover:border-gold-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-                >
-                  {/* Icon Container */}
-                  <div className="w-14 h-14 bg-navy-950 rounded-lg flex items-center justify-center mb-6 group-hover:bg-gold-500 transition-colors duration-300">
-                    <IconComponent size={28} className="text-gold-500 group-hover:text-navy-950 transition-colors" />
-                  </div>
-
-                  {/* Tag */}
-                  <span className="inline-block text-xs font-bold text-gold-500 tracking-widest mb-3">
-                    {service.tag}
-                  </span>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-navy-950 mb-3">
-                    {service.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-navy-500 text-sm mb-5 leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  {/* Link */}
-                  <Link
-                    href="/services"
-                    className="inline-flex items-center text-navy-950 font-semibold text-sm hover:text-gold-500 transition-colors"
-                  >
-                    Learn more
-                    <ChevronRight size={16} className="ml-1" />
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FEATURED PROJECTS ===== */}
-      <section className="py-20 bg-navy-950 relative">
-        <div className="absolute inset-0 topo-pattern pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/98 to-navy-950 pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Label */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <div className="w-8 h-0.5 bg-gold-500" />
-              <span className="text-sm font-semibold text-gold-500 tracking-wide">
-                OUR WORK
-              </span>
-            </div>
-            <Link
-              href="/projects"
-              className="text-gold-500 hover:text-gold-300 font-semibold text-sm flex items-center gap-2 transition-colors"
-            >
-              View all projects
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-
-          {/* Heading */}
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-16">
-            Featured Projects
-          </h2>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, idx) => (
-              <div
-                key={idx}
-                className="group p-8 bg-navy-900/60 border border-navy-700/50 backdrop-blur-sm rounded-lg hover:border-gold-500 transition-all duration-300"
-              >
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, tagIdx) => (
-                    <span
-                      key={tagIdx}
-                      className="px-3 py-1 bg-navy-800/60 text-gold-300 text-xs font-semibold rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Title */}
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  {project.title}
-                </h3>
-
-                {/* Client */}
-                <p className="text-gold-300 font-semibold mb-6">
-                  {project.client}
-                </p>
-
-                {/* Metric */}
-                <div className="pt-6 border-t border-navy-700/50">
-                  <p className="text-navy-200 text-sm mb-1">KEY METRIC</p>
-                  <p className="text-gold-500 font-bold text-lg">
-                    {project.metric}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== TRUST BAR ===== */}
-      <section className="py-16 bg-white border-y border-lightgray">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-navy-950 font-semibold text-lg mb-12">
-            Trusted by Government & Industry Leaders
-          </p>
-
-          {/* Client Logos */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center justify-items-center">
-            {["District of North Saanich", "Columbia Shuswap Regional District", "URBAN Systems"].map(
-              (client, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-4 text-navy-950 font-semibold opacity-70"
-                >
-                  <Shield size={28} className="text-gold-500" />
-                  <span className="hidden sm:inline">{client}</span>
-                  <span className="sm:hidden">Client {idx + 1}</span>
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== PRODUCTS SECTION: NG911 AutoConform ===== */}
-      <section className="py-20 bg-offwhite">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Text Content */}
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-navy-950 mb-6">
-                NG911 AutoConform
-              </h2>
-
-              <p className="text-lg text-navy-700 mb-8 leading-relaxed">
-                Automated compliance validation and data standardization for next-generation 911 systems.
-                Streamline your addressing infrastructure with intelligent schema guards and AI-driven field derivation.
-              </p>
-
-              {/* Features */}
-              <div className="space-y-4 mb-8">
-                {features.map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 size={24} className="text-gold-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-navy-700 font-semibold">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA */}
+      <section className="home-hero">
+        <div className="container home-hero__grid">
+          <div className="home-hero__copy">
+            <span className="eyebrow">Secure Local Intelligence</span>
+            <h1>
+              Engineering <span>precision</span> for public service.
+            </h1>
+            <p>
+              We build the geospatial systems, LiDAR solutions, and custom software
+              that BC local governments depend on for smarter decisions and safer
+              communities.
+            </p>
+            <div className="home-hero__rule" />
+            <div className="home-hero__actions">
               <Link
-                href="/products"
-                className="inline-flex items-center px-8 py-3 bg-navy-950 text-gold-500 font-semibold rounded-sm hover:bg-navy-900 transition-colors duration-200"
+                href="/projects"
+                className="button button-primary button--cta"
               >
-                Request a Demo
-                <ArrowRight size={18} className="ml-2" />
+                Explore our work
+                <span className="button__icon" aria-hidden="true">→</span>
+              </Link>
+              <Link
+                href="/contact"
+                className="button button-secondary button--cta"
+              >
+                Get in touch
+                <span className="button__icon" aria-hidden="true">→</span>
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Right: Terminal Mockup */}
-            <div className="bg-charcoal rounded-lg p-6 border border-navy-700 font-mono text-sm overflow-hidden">
-              {/* Terminal Header */}
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-navy-700">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
-                <span className="ml-2 text-muted text-xs">ng911-conform</span>
-              </div>
+      <section className="trust-bar">
+        <div className="container">
+          <span className="eyebrow">Trusted by</span>
+          <div className="trust-bar__logos">
+            {clients.map((client) => (
+              <img
+                key={client.name}
+                className="trust-logo"
+                src={client.src}
+                alt={client.name}
+                width={client.width}
+                height={client.height}
+                style={{ height: client.displayHeight }}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Terminal Content */}
-              <div className="space-y-2 text-green-400">
-                <div>
-                  <span className="text-gold-500">$</span> ng911 validate addressing.geojson
-                </div>
-                <div className="text-muted">Scanning 2,847 records...</div>
-                <div className="mt-4">
-                  <span className="text-gold-500">✓</span> Schema validation: PASSED
-                </div>
-                <div>
-                  <span className="text-gold-500">✓</span> Address format: COMPLIANT
-                </div>
-                <div>
-                  <span className="text-gold-500">✓</span> Spatial integrity: VERIFIED
-                </div>
-                <div className="mt-4 text-gold-500">
-                  <span className="text-gold-500">✓</span> NENA 2.1 CERTIFIED
-                </div>
+      <section className="stats-band section">
+        <div className="container">
+          <span className="eyebrow">By the numbers</span>
+          <div className="stats-grid">
+            {stats.map((stat) => (
+              <div className="stat-block" key={stat.label}>
+                <p>{stat.value}</p>
+                <div />
+                <span>{stat.label}</span>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="services-overview section">
+        <div className="container">
+          <div className="section-heading">
+            <h2 className="section-title">What we do</h2>
+            <hr className="gold-rule" />
+          </div>
+          <div className="service-grid">
+            {services.map((service) => (
+              <article className="card service-card" key={service.title}>
+                <div className="service-card__content">
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                  <Link href="/services">Learn more →</Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="featured-project section"
+        aria-labelledby="featured-projects-heading"
+      >
+        <div className="container">
+          <div className="section-heading">
+            <h2 className="section-title" id="featured-projects-heading">
+              Featured projects
+            </h2>
+            <hr className="gold-rule" />
+          </div>
+
+          <FeaturedProjectsCarousel projects={featuredProjects} />
+
+          <div className="projects-cta">
+            <Link href="/projects" className="text-link">
+              View all projects <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="product-spotlight section">
+        <div className="container product-spotlight__grid">
+          <div className="product-spotlight__copy">
+            <span className="eyebrow">Our product</span>
+            <h2>NG911 AutoConform</h2>
+            <hr className="gold-rule" />
+            <p>
+              Automated compliance validation and data standardization for next-generation 911 systems. 
+              Streamline your addressing infrastructure with intelligent schema guards and AI-driven field derivation.
+            </p>
+            <ul className="feature-list">
+              {features.map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+            <Link
+              href="/products"
+              className="button button-inverse button--cta"
+            >
+              Request a demo
+              <span className="button__icon" aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <div className="product-spotlight__visual">
+            <div className="app-window" aria-label="NG911 AutoConform validation output">
+              <div className="app-window__bar">
+                <span className="app-window__dots" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span className="app-window__title">ng911 · validate</span>
+              </div>
+              <pre className="app-window__body">{`$ ng911 validate addressing.geojson
+Scanning 2,847 records...
+
+✓ Schema validation: PASSED
+✓ Address format: COMPLIANT
+✓ Spatial integrity: VERIFIED
+
+Result: 2,847 / 2,847 records conformant
+Report: ng911_conformance_2026.pdf`}</pre>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== ABOUT SNAPSHOT ===== */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Founder Card */}
+      <section className="about-teaser section-tight">
+        <div className="container">
+          <div className="about-teaser__grid">
+            <h2>Engineering precision for public service.</h2>
             <div>
-              <div className="bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-8 text-white max-w-sm">
-                {/* Initials */}
-                <div className="w-16 h-16 bg-gold-500 rounded-full flex items-center justify-center mb-6 text-navy-950 font-bold text-2xl">
-                  JS
-                </div>
-
-                {/* Name & Title */}
-                <h3 className="text-2xl font-bold mb-2">John Soliman</h3>
-                <p className="text-gold-500 font-semibold mb-6">Founder & Principal</p>
-
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {["GIS", "LiDAR", "Node.js", "Geospatial"].map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-navy-800 text-gold-300 text-xs font-semibold rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right: About Text */}
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-navy-950 mb-6">
-                Engineering Precision for Public Service
-              </h2>
-
-              <p className="text-lg text-navy-700 mb-8 leading-relaxed">
-                Camber & Core Systems combines world-class engineering with deep expertise
-                in geospatial systems and emergency services infrastructure. We partner with
-                BC municipalities to deliver reliable, scalable solutions that communities depend on.
+              <p>
+                Camber &amp; Core Systems is a Victoria, BC engineering firm
+                focused on geospatial systems, LiDAR solutions, NG9-1-1 compliance
+                software, and custom GIS tooling.
               </p>
-
-              {/* Info Tiles */}
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { label: "Location", value: "Victoria, BC" },
-                  { label: "Focus", value: "Public Sector GIS" },
-                  { label: "Founded", value: "2024" },
-                  { label: "Education", value: "UVic Engineering" },
-                ].map((info, idx) => (
-                  <div key={idx} className="p-4 bg-offwhite rounded-lg">
-                    <p className="text-xs font-bold text-gold-500 tracking-wide mb-1">
-                      {info.label}
-                    </p>
-                    <p className="font-semibold text-navy-950">{info.value}</p>
-                  </div>
-                ))}
-              </div>
+              <p>
+                Founded in 2024, the company brings UVic Engineering roots and a
+                practical public-sector mindset to work that must be accurate,
+                defensible, and maintainable.
+              </p>
+              <p>
+                We partner with local governments and regional districts across
+                British Columbia to modernize the data infrastructure communities
+                rely on.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== FINAL CTA BANNER ===== */}
-      <section className="py-20 bg-navy-900 topo-pattern relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/95 to-navy-900 pointer-events-none" />
-
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to modernize your geospatial operations?
-          </h2>
-
-          <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto">
-            Let's talk about how Camber & Core can help your municipality unlock
-            the full potential of your geospatial data.
+      <section className="cta-band section-tight">
+        <div className="container">
+          <h2>Ready to modernize your geospatial operations?</h2>
+          <p>
+            Bring your GIS, LiDAR, and emergency-service data into a clearer,
+            more reliable operating model.
           </p>
-
-          <Link
-            href="/contact"
-            className="inline-flex items-center px-10 py-4 bg-gold-500 text-navy-950 font-bold rounded-sm hover:bg-gold-300 transition-colors duration-200 text-lg"
-          >
-            Start a Conversation
-            <ArrowRight size={20} className="ml-3" />
+          <Link href="/contact" className="button button-primary button--cta">
+            Start a conversation
+            <span className="button__icon" aria-hidden="true">→</span>
           </Link>
         </div>
       </section>

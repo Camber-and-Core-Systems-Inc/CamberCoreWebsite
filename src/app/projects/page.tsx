@@ -1,177 +1,237 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
 
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Real-world geospatial work delivered to BC local governments: LiDAR processing, steep-slope mapping, and NG9-1-1 addressing systems aligned to NENA standards.",
+};
 
 interface Project {
-  id: number;
+  slug: string;
   client: string;
   title: string;
-  description: string;
-  outcome: string[];
+  term?: string;
+  description: string[];
+  outcomes: string[];
   tags: string[];
+  image: string;
+  imageAlt: string;
+  // Optional cascading screenshot collage shown in place of the single image.
+  gallery?: { src: string; alt: string }[];
+  galleryKicker?: string;
 }
 
 const projects: Project[] = [
   {
-    id: 1,
-    client: 'District of North Saanich',
-    title: 'LiDAR Data Processing & DEM Generation',
-    description:
-      'The District of North Saanich required comprehensive processing of raw LiDAR data for terrain analysis and infrastructure planning. We executed a complete data pipeline including advanced noise filtering, automated ground/non-ground classification, and rigorous quality assurance. The resulting high-resolution digital elevation model was validated for accuracy and delivered with full documentation for immediate use in planning workflows.\n\nThis project demonstrated the importance of methodical data processing—each step was documented, validated, and verified against ground-truth measurements to ensure government-grade accuracy.',
-    outcome: [
-      'Highly accurate DEM for terrain analysis',
-      'Validated against ground-truth surveys',
-      'Infrastructure planning datasets',
-      'Environmental management capabilities',
+    slug: "lidar-dem",
+    client: "District of North Saanich",
+    title: "LiDAR Data Processing & DEM Generation",
+    description: [
+      "The District required comprehensive processing of raw LiDAR sourced from government agencies to support terrain analysis and infrastructure planning. We ran the full pipeline (quality assurance for completeness and resolution, advanced noise filtering, and precise classification of ground and non-ground points), and from that enhanced data generated a high-resolution Digital Elevation Model.",
+      "Every step was documented, and the final model was rigorously validated against known control points and reference datasets to guarantee government-grade accuracy.",
     ],
-    tags: ['LiDAR', 'DEM/DSM', 'Data Processing', 'QA/QC'],
+    outcomes: [
+      "Highly accurate, validated Digital Elevation Model",
+      "Foundation for detailed terrain analysis",
+      "Infrastructure planning datasets",
+      "Informed environmental management decisions",
+    ],
+    tags: ["LiDAR", "DEM / DSM", "Data Processing", "QA/QC"],
+    image: "/projects/lidar-dem.png",
+    imageAlt:
+      "3D LiDAR-derived terrain model of North Saanich showing classified ground, vegetation, and a road corridor.",
   },
   {
-    id: 2,
-    client: 'District of North Saanich',
-    title: 'Steep Slope Map Production',
-    description:
-      'Following DEM generation, the District required detailed slope analysis and risk classification mapping for land-use planning and hazard assessment. We computed slope gradients from the DEM, classified terrain into categorical risk bands, and produced professional cartographic outputs in multiple formats. The resulting maps integrate seamlessly into existing planning documents and support informed decision-making for development constraints.\n\nThe project showcased how geospatial analysis translates raw elevation data into actionable intelligence for municipal planning.',
-    outcome: [
-      'Slope classification for risk assessment',
-      'PDF, GeoTIFF, and Shapefile outputs',
-      'Land-use planning integration',
-      'Development constraint documentation',
+    slug: "steep-slope",
+    client: "District of North Saanich",
+    title: "Steep Slope Map Production",
+    description: [
+      "Building on the generated DEM, the District needed detailed slope analysis and risk classification for land-use planning and hazard assessment. Slope gradients were computed using advanced GIS algorithms and classified into distinct categories (moderate, steep, and very steep) to surface areas of potential concern across the district.",
+      "That analysis was translated into detailed steep-slope maps produced to high cartographic standards and delivered in the formats planning teams actually use day to day.",
     ],
-    tags: ['Slope Analysis', 'Cartography', 'Risk Classification', 'GIS'],
+    outcomes: [
+      "Slope classification for risk assessment",
+      "PDF, GeoTIFF, and Shapefile outputs",
+      "Integrated into land-use planning",
+      "Supports development constraint documentation",
+    ],
+    tags: ["Slope Analysis", "Cartography", "Risk Classification", "GIS"],
+    image: "/projects/steep-slope.png",
+    imageAlt:
+      "Steep slope map of the Saanich Peninsula highlighting slopes over 30 percent in gold over the road network.",
   },
   {
-    id: 3,
-    client: 'Columbia Shuswap Regional District',
-    title: 'NG9-1-1 Addressing Data Aggregation',
-    description:
-      'The Columbia Shuswap Regional District needed to consolidate addressing data across multiple jurisdictions for NG9-1-1 emergency response readiness. We designed and implemented an automated aggregation system that pulls from disparate sources, applies SSAP-aligned standardization, and enforces rigorous QA/QC rules. The solution tracks changes across versions and provides controlled staging for validation before delivery.\n\nThis project reduced manual coordination overhead by 70% and created a repeatable process for future data updates, ensuring compliance with NENA standards while maintaining data quality.',
-    outcome: [
-      'Centralized SSAP-aligned dataset',
-      'Automated QA/QC validation',
-      'Controlled staging & versioning',
-      'Validated, production-ready deliverables',
+    slug: "ng911-csrd",
+    client: "Columbia Shuswap Regional District",
+    title: "NG9-1-1 Addressing Aggregation & Automation System",
+    term: "December 2025 – May 2026",
+    description: [
+      "In partnership with Urban Systems Ltd., the CSRD engaged Camber & Core to build a master NG9-1-1 addressing database for the regional district and its member municipalities. We executed all data engineering, transformation, ETL development, and QA/QC automation, conforming the data to NENA standards and preparing it for provincial aggregator submission.",
+      "A gap analysis assessed each municipality against the NENA data model; legacy attributes were mapped to the full NENA field set with NGUIDs as the authoritative identifier; and automated attribute rules now enforce compliance at the data layer, blocking non-compliant edits. A central, version-controlled NG911 Hub with scheduled automations and dashboards was delivered to run the system.",
     ],
-    tags: ['NG9-1-1', 'Data Aggregation', 'SSAP', 'Automation', 'NENA'],
+    outcomes: [
+      "Standards-aligned master SSAP dataset",
+      "Automated ETL and QA/QC pipelines",
+      "Per-municipality web editing applications",
+      "Aggregator-ready, maintainable in-house",
+    ],
+    tags: ["NG9-1-1", "Multi-Municipal", "SSAP", "ETL Automation", "NENA"],
+    image: "/projects/csrd-hub.png",
+    imageAlt:
+      "CSRD NG9-1-1 Central Database System operations and documentation hub with quick actions and municipal guides.",
+    galleryKicker: "Delivered system · CSRD NG9-1-1 Central Hub",
+    gallery: [
+      {
+        src: "/projects/csrd-hub.png",
+        alt: "CSRD NG9-1-1 Central Database System documentation and operations hub.",
+      },
+      {
+        src: "/projects/csrd-editor.png",
+        alt: "Per-municipality web address editor with map and attribute table.",
+      },
+      {
+        src: "/projects/csrd-rules.png",
+        alt: "Server-side attribute rules enforcing NENA conformance on every edit.",
+      },
+    ],
   },
   {
-    id: 4,
-    client: 'District of North Saanich',
-    title: 'NG9-1-1 Readiness & Addressing Modernization',
-    description:
-      'The District engaged Camber & Core to achieve full NG9-1-1 readiness with modernized addressing workflows. We built a purpose-designed web application that guides staff through addressing validation, automated conformance checking, and NENA-aligned standardization. The system continuously validates data integrity and generates audit logs for compliance documentation.\n\nThe result is a standardized, repeatable process that reduces errors, accelerates updates, and ensures the District maintains readiness for seamless emergency response system integration.',
-    outcome: [
-      'NENA standards compliance',
-      'Automated conformance validation',
-      'Web-based workflow application',
-      'Standardized, repeatable update process',
+    slug: "ng911-north-saanich",
+    client: "District of North Saanich",
+    title: "NG9-1-1 Readiness & Addressing Operations Modernization",
+    term: "July 2025 – August 2025",
+    description: [
+      "The District engaged Camber & Core to prepare core geospatial datasets and workflows for NG9-1-1. The work emphasized a scalable path from everyday edits to delivery-ready data, with clear governance, quality controls, and minimal disruption to staff operations.",
+      "We assessed the existing Road Centerline and Site/Structure Address Point datasets against NG9-1-1 requirements, mapped legacy attributes to an aligned schema with stable NGUIDs, and built a layered QA/QC framework. An Addressing Maintenance application was delivered on the ArcGIS stack to streamline edits, guide users with inline rules, and preserve a full, auditable edit history.",
     ],
-    tags: ['NG9-1-1', 'NENA', 'Web Application', 'Validation', 'Compliance'],
+    outcomes: [
+      "NENA-aligned Road Centerline & SSAP data",
+      "Automated conformance validation",
+      "Purpose-built Address Manager application",
+      "Repeatable, auditable update process",
+    ],
+    tags: ["NG9-1-1", "NENA", "Web Application", "Validation", "Compliance"],
+    image: "/projects/dns-address-manager.png",
+    imageAlt:
+      "District of North Saanich Address Manager application showing inline validation rules beside aerial imagery and address points.",
+    galleryKicker: "Delivered system · North Saanich Addressing",
+    gallery: [
+      {
+        src: "/projects/dns-address-manager.png",
+        alt: "District of North Saanich Address Manager application with inline validation rules over aerial imagery.",
+      },
+      {
+        src: "/projects/dns-conformance.jpg",
+        alt: "NG9-1-1 conformance validation showing 100% mandatory, conditional, and optional attribute pass rates.",
+      },
+    ],
   },
 ];
 
 export default function ProjectsPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-16 bg-navy-950 text-white topo-pattern">
-        <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <h1 className="text-5xl font-bold tracking-tight sm:text-6xl mb-6">
-            Our Projects
-          </h1>
-          <p className="text-xl text-navy-100 max-w-3xl leading-relaxed">
-            Real-world geospatial solutions delivered to government agencies across British Columbia. Each project demonstrates our commitment to accuracy, compliance, and measurable impact.
+    <>
+      <section className="page-hero">
+        <div className="container">
+          <span className="eyebrow">Our work</span>
+          <h1>Projects</h1>
+          <hr className="gold-rule" />
+          <p>
+            Real-world geospatial solutions delivered to local governments
+            across British Columbia. Each engagement reflects our commitment to
+            accuracy, NENA compliance, and measurable, maintainable impact.
           </p>
         </div>
       </section>
 
-      {/* Projects */}
-      <section className="py-20 bg-offwhite">
-        <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="space-y-16">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-              >
-                <div className="h-2 bg-gradient-to-r from-gold-500 to-gold-300" />
-
-                <div className="p-8 lg:p-12">
-                  {/* Client Badge */}
-                  <div className="inline-block mb-4">
-                    <span className="text-sm font-semibold text-gold-700 bg-gold-100 px-4 py-2 rounded-full">
-                      {project.client}
+      <section className="section project-list">
+        <div className="container">
+          {projects.map((project, index) => (
+            <article
+              className={
+                index % 2 === 1
+                  ? "project-feature project-feature--reverse"
+                  : "project-feature"
+              }
+              id={project.slug}
+              key={project.slug}
+            >
+              {project.gallery ? (
+                <div className="project-feature__stack">
+                  {project.galleryKicker && (
+                    <span className="project-feature__stack-kicker">
+                      {project.galleryKicker}
                     </span>
-                  </div>
-
-                  {/* Project Title */}
-                  <h2 className="text-4xl font-bold text-navy-950 mb-6">
-                    {project.title}
-                  </h2>
-
-                  {/* Description */}
-                  <div className="prose prose-lg max-w-none mb-10 text-charcoal/80">
-                    {project.description.split('\n\n').map((paragraph, idx) => (
-                      <p key={idx} className="mb-4 leading-relaxed text-lg">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-
-                  {/* Outcomes */}
-                  <div className="mb-10">
-                    <h3 className="text-xl font-semibold text-navy-950 mb-4">
-                      Outcomes & Impact
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {project.outcome.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-3">
-                          <CheckCircle2 className="w-5 h-5 text-gold-500 mt-1 flex-shrink-0" />
-                          <span className="text-base text-charcoal">
-                            {item}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="text-sm font-medium text-navy-700 bg-navy-100 px-3 py-1.5 rounded-lg"
-                      >
-                        {tag}
-                      </span>
+                  )}
+                  <div
+                    className={
+                      project.gallery.length === 2
+                        ? "project-stack project-stack--2"
+                        : "project-stack"
+                    }
+                  >
+                    {project.gallery.map((shot) => (
+                      <img
+                        key={shot.src}
+                        src={shot.src}
+                        alt={shot.alt}
+                        loading="lazy"
+                      />
                     ))}
                   </div>
                 </div>
+              ) : (
+                <div className="project-feature__media">
+                  <img src={project.image} alt={project.imageAlt} loading="lazy" />
+                </div>
+              )}
+
+              <div className="project-feature__body">
+                <span className="eyebrow-mono">Client · {project.client}</span>
+                <h2>{project.title}</h2>
+                {project.term && (
+                  <p className="project-feature__term">{project.term}</p>
+                )}
+                {project.description.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+
+                <div className="project-feature__outcomes">
+                  <span className="project-feature__outcomes-label">
+                    Outcomes &amp; impact
+                  </span>
+                  <ul>
+                    {project.outcomes.map((outcome) => (
+                      <li key={outcome}>{outcome}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="project-tags">
+                  {project.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-navy-950 text-white">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Let's discuss your project
-          </h2>
-          <p className="text-xl text-navy-100 mb-10 max-w-2xl mx-auto">
-            Whether you need LiDAR processing, NG9-1-1 readiness, or custom GIS solutions, we're ready to help.
+      <section className="cta-band section-tight">
+        <div className="container">
+          <h2>Let&apos;s discuss your project</h2>
+          <p>
+            Whether you need LiDAR processing, NG9-1-1 readiness, or custom GIS
+            solutions, we&apos;re ready to help.
           </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-3 bg-gold-500 text-navy-950 px-8 py-4 rounded-lg font-semibold hover:bg-gold-400 transition-colors"
-          >
-            Start a Conversation
-            <ArrowRight className="w-5 h-5" />
+          <Link href="/contact" className="button button-primary button--cta">
+            Start a conversation
+            <span className="button__icon" aria-hidden="true">→</span>
           </Link>
         </div>
       </section>
-    </div>
+    </>
   );
 }

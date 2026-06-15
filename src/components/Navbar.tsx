@@ -1,24 +1,60 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    document.body.classList.toggle("no-scroll", isMobileMenuOpen);
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [isMobileMenuOpen]);
+
+  // Keyboard support for the mobile drawer: Escape closes it, and Tab is
+  // trapped within the drawer so focus can't drift to the hidden page behind.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const drawer = drawerRef.current;
+    const focusable = drawer?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled])',
+    );
+    focusable?.[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+        toggleButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== "Tab" || !focusable || focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
     { label: "Projects", href: "/projects" },
     { label: "Products", href: "/products" },
@@ -26,84 +62,94 @@ export default function Navbar() {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-navy-950 border-b border-gold-500/15 shadow-lg shadow-navy-950/50"
-          : "bg-navy-950/80 backdrop-blur-md"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[72px]">
-        {/* Logo */}
-        <Link href="/" className="flex items-baseline gap-0.5 flex-shrink-0">
-          <span className="text-xl font-bold tracking-wider text-white">
-            CAMBER
-          </span>
-          <span className="text-xl font-bold tracking-wider text-gold-500">
-            &
-          </span>
-          <span className="text-xl font-bold tracking-wider text-white">
-            CORE
-          </span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-white/80 hover:text-gold-500 transition-colors duration-200 text-sm font-medium tracking-wide"
-            >
-              {link.label}
-            </Link>
-          ))}
+    <header className="site-header">
+      <div className="top-bar">
+        <div className="container top-bar__inner">
+          <p>SERVING BC LOCAL GOVERNMENTS</p>
+          <a href="tel:2502798735">250-279-8735</a>
         </div>
+      </div>
 
-        {/* Desktop CTA Button & Mobile Menu Toggle */}
-        <div className="flex items-center gap-4">
+      <nav className="nav-shell" aria-label="Main navigation">
+        <div className="container nav-shell__inner">
+          <Link
+            href="/"
+            className="wordmark"
+            aria-label="Camber and Core Systems home"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <span className="wordmark__line">
+              CAMBER <span>&amp;</span> CORE
+            </span>
+            <span className="wordmark__subline">SYSTEMS</span>
+          </Link>
+
+          <div className="nav-links" aria-label="Primary links">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={isActive ? "nav-link nav-link--active" : "nav-link"}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+
           <Link
             href="/contact"
-            className="hidden md:inline-block px-6 py-2.5 bg-gold-500 text-navy-950 font-semibold rounded-md hover:bg-gold-300 transition-colors duration-200 text-sm"
+            className="button button-primary nav-cta"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
             Contact Us
           </Link>
 
-          {/* Mobile Menu Button */}
           <button
+            ref={toggleButtonRef}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white hover:text-gold-500 transition-colors"
-            aria-label="Toggle menu"
+            className="mobile-menu-button"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <span />
+            <span />
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Menu Panel */}
-      {isMobileMenuOpen && (
-        <div className="bg-navy-950 border-t border-navy-700/50 md:hidden">
-          <div className="flex flex-col px-4 py-6 space-y-4">
+      <div
+        id="mobile-menu"
+        ref={drawerRef}
+        className={isMobileMenuOpen ? "mobile-drawer mobile-drawer--open" : "mobile-drawer"}
+      >
+        <div className="mobile-drawer__inner">
+          <div className="mobile-drawer__links">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white hover:text-gold-500 transition-colors duration-200 py-2 border-b border-navy-700/30"
+                className="mobile-drawer__link"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/contact"
-              className="block px-6 py-2.5 bg-gold-500 text-navy-950 font-semibold rounded-md hover:bg-gold-300 transition-colors duration-200 text-center mt-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Contact Us
-            </Link>
           </div>
+          <Link
+            href="/contact"
+            className="button button-primary"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Contact Us
+          </Link>
         </div>
-      )}
-    </nav>
+      </div>
+    </header>
   );
 }

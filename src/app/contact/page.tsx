@@ -1,282 +1,261 @@
 "use client";
 
-import { useState } from "react";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { useRef, useState } from "react";
+
+const CONTACT_EMAIL = "john@camberandcore.ca";
+
+const serviceOptions = [
+  "LiDAR & Remote Sensing",
+  "GIS & Spatial Analysis",
+  "NG9-1-1 Readiness",
+  "Custom Software",
+  "Other",
+];
+
+const initialForm = {
+  fullName: "",
+  organization: "",
+  email: "",
+  phone: "",
+  serviceInterest: "",
+  message: "",
+};
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    organization: "",
-    email: "",
-    phone: "",
-    serviceInterest: "",
-    message: "",
-  });
-
+  const [formData, setFormData] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const statusRef = useRef<HTMLDivElement>(null);
 
-  const serviceOptions = [
-    "LiDAR & Remote Sensing",
-    "GIS & Spatial Analysis",
-    "NG9-1-1 Readiness",
-    "Custom Software",
-    "Other",
-  ];
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Here you would typically send the form data to a backend or email service
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormData({
-        fullName: "",
-        organization: "",
-        email: "",
-        phone: "",
-        serviceInterest: "",
-        message: "",
-      });
-      setSubmitted(false);
-    }, 3000);
+    // Static site (no server): compose an email in the visitor's mail client.
+    const subject = `Project inquiry — ${
+      formData.organization || formData.fullName
+    }`;
+    const body = [
+      `Name: ${formData.fullName}`,
+      `Organization: ${formData.organization}`,
+      `Email: ${formData.email}`,
+      `Phone: ${formData.phone || "—"}`,
+      `Service interest: ${formData.serviceInterest || "—"}`,
+      "",
+      formData.message,
+    ].join("\n");
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+
+    setSubmitted(true);
+    // Move focus to the confirmation so screen-reader and keyboard users hear it.
+    requestAnimationFrame(() => statusRef.current?.focus());
   };
 
   return (
     <>
-      {/* ===== HERO ===== */}
-      <section className="min-h-[50vh] bg-navy-950 topo-pattern relative pt-24 flex flex-col justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/95 to-navy-950 pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
-            Contact Us
-          </h1>
-
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl">
-            Get in touch with our team to discuss your geospatial project and discover how we can help.
+      <section className="page-hero">
+        <div className="container">
+          <span className="eyebrow">Get in touch</span>
+          <h1>Contact us</h1>
+          <hr className="gold-rule" />
+          <p>
+            Tell us about your geospatial project and we will show you how we
+            can help.
           </p>
         </div>
       </section>
 
-      {/* ===== CONTACT FORM & INFO ===== */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Left: Form (60% width) */}
-            <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold text-navy-950 mb-8">
-                Send us a message
-              </h2>
+      <section className="section">
+        <div className="container contact-layout">
+          <div className="contact-form-wrap">
+            <h2>Send us a message</h2>
 
-              {submitted ? (
-                <div className="p-8 bg-green-50 border border-green-200 rounded-lg text-center">
-                  <p className="text-green-800 font-semibold text-lg">
-                    Thank you for reaching out!
-                  </p>
-                  <p className="text-green-700 mt-2">
-                    We'll get back to you as soon as possible.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Full Name */}
-                  <div>
-                    <label htmlFor="fullName" className="block text-sm font-semibold text-navy-950 mb-2">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-lightgray rounded-lg focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all duration-200"
-                      placeholder="John Doe"
-                    />
-                  </div>
+            {submitted && (
+              <div
+                className="form-success"
+                role="status"
+                aria-live="polite"
+                tabIndex={-1}
+                ref={statusRef}
+              >
+                <p>Your email app should have opened with your message ready.</p>
+                <p>
+                  If it didn&apos;t, email us directly at{" "}
+                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                </p>
+              </div>
+            )}
 
-                  {/* Organization */}
-                  <div>
-                    <label htmlFor="organization" className="block text-sm font-semibold text-navy-950 mb-2">
-                      Organization
-                    </label>
-                    <input
-                      type="text"
-                      id="organization"
-                      name="organization"
-                      value={formData.organization}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-lightgray rounded-lg focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all duration-200"
-                      placeholder="Your Municipality"
-                    />
-                  </div>
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-field">
+                <label htmlFor="fullName">
+                  Full name<span className="req" aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  autoComplete="name"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                  placeholder="John Doe"
+                />
+              </div>
 
-                  {/* Email */}
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-navy-950 mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-lightgray rounded-lg focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all duration-200"
-                      placeholder="john@example.com"
-                    />
-                  </div>
+              <div className="form-field">
+                <label htmlFor="organization">
+                  Organization<span className="req" aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="organization"
+                  name="organization"
+                  type="text"
+                  autoComplete="organization"
+                  value={formData.organization}
+                  onChange={handleChange}
+                  required
+                  placeholder="Your municipality"
+                />
+              </div>
 
-                  {/* Phone */}
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-navy-950 mb-2">
-                      Phone Number (Optional)
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-lightgray rounded-lg focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all duration-200"
-                      placeholder="(250) 555-0123"
-                    />
-                  </div>
-
-                  {/* Service Interest */}
-                  <div>
-                    <label htmlFor="serviceInterest" className="block text-sm font-semibold text-navy-950 mb-2">
-                      Service Interest
-                    </label>
-                    <select
-                      id="serviceInterest"
-                      name="serviceInterest"
-                      value={formData.serviceInterest}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-lightgray rounded-lg focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all duration-200 bg-white"
-                    >
-                      <option value="">Select a service...</option>
-                      {serviceOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Message */}
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-semibold text-navy-950 mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full px-4 py-3 border border-lightgray rounded-lg focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 transition-all duration-200 resize-none"
-                      placeholder="Tell us about your project and how we can help..."
-                    />
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full inline-flex items-center justify-center px-8 py-4 bg-gold-500 text-navy-950 font-bold rounded-sm hover:bg-gold-300 transition-colors duration-200 text-lg"
-                  >
-                    Send Message
-                    <ArrowRight size={20} className="ml-2" />
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Right: Contact Details (40% width) */}
-            <div>
-              <div className="bg-navy-900 rounded-lg p-8 text-white sticky top-24">
-                <h3 className="text-2xl font-bold mb-8">Other Ways to Connect</h3>
-
-                <div className="space-y-8">
-                  {/* Email */}
-                  <div className="flex gap-4 items-start">
-                    <Mail size={24} className="text-gold-500 flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="text-sm text-white/70 font-semibold mb-1">EMAIL</p>
-                      <a
-                        href="mailto:john@camberandcore.ca"
-                        className="text-white font-semibold hover:text-gold-500 transition-colors"
-                      >
-                        john@camberandcore.ca
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Phone */}
-                  <div className="flex gap-4 items-start">
-                    <Phone size={24} className="text-gold-500 flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="text-sm text-white/70 font-semibold mb-1">PHONE</p>
-                      <a
-                        href="tel:+12502798735"
-                        className="text-white font-semibold hover:text-gold-500 transition-colors"
-                      >
-                        250-279-8735
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Address */}
-                  <div className="flex gap-4 items-start">
-                    <MapPin size={24} className="text-gold-500 flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="text-sm text-white/70 font-semibold mb-1">ADDRESS</p>
-                      <p className="text-white">
-                        4010 Century Rd<br />
-                        Victoria, BC V8X 2E4<br />
-                        Canada
-                      </p>
-                    </div>
-                  </div>
+              <div className="form-grid-2">
+                <div className="form-field">
+                  <label htmlFor="email">
+                    Email address<span className="req" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="john@example.com"
+                  />
                 </div>
 
-                {/* Response Time */}
-                <div className="mt-12 pt-8 border-t border-navy-700">
-                  <p className="text-sm text-white/70">
-                    We typically respond to inquiries within 24 business hours.
-                  </p>
+                <div className="form-field">
+                  <label htmlFor="phone">Phone (optional)</label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="(250) 555-0123"
+                  />
                 </div>
               </div>
-            </div>
+
+              <div className="form-field">
+                <label htmlFor="serviceInterest">
+                  Service interest<span className="req" aria-hidden="true">*</span>
+                </label>
+                <select
+                  id="serviceInterest"
+                  name="serviceInterest"
+                  value={formData.serviceInterest}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select a service...</option>
+                  {serviceOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="message">
+                  Message<span className="req" aria-hidden="true">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={5}
+                  placeholder="Tell us about your project and how we can help..."
+                />
+              </div>
+
+              <p className="form-note">
+                Fields marked <span aria-hidden="true">*</span> are required.
+              </p>
+
+              <button
+                type="submit"
+                className="button button-primary contact-form__submit"
+              >
+                Send message →
+              </button>
+            </form>
           </div>
-        </div>
-      </section>
 
-      {/* ===== FINAL CTA ===== */}
-      <section className="py-20 bg-offwhite">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy-950 mb-4">
-            Have questions?
-          </h2>
+          <aside className="contact-aside">
+            <h2>Other ways to connect</h2>
 
-          <p className="text-lg text-navy-700 mb-8">
-            Feel free to reach out directly via phone or email. We're here to help with any inquiries about our services.
-          </p>
+            <ul>
+              <li className="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                <div>
+                  <span>Email</span>
+                  <a href="mailto:john@camberandcore.ca">john@camberandcore.ca</a>
+                </div>
+              </li>
+
+              <li className="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                <div>
+                  <span>Phone</span>
+                  <a href="tel:+12502798735">250-279-8735</a>
+                </div>
+              </li>
+
+              <li className="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <div>
+                  <span>Address</span>
+                  <p>
+                  1895 Rye Pl
+                    <br />
+                    Saanichton, BC V8M 1L2
+                    <br />
+                    Canada
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <p className="contact-aside__note">
+              We typically respond to inquiries within 24 business hours.
+            </p>
+          </aside>
         </div>
       </section>
     </>

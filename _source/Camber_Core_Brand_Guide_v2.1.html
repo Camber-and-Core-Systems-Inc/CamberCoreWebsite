@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camber &amp; Core Systems: Brand Style Guide</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Questrial&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* Typography tokens (Brand Style Guide v2.1) */
+    --display: 'Raleway', 'Segoe UI', Arial, sans-serif;   /* display: wordmark, headings, labels */
+    --sans: 'Questrial', 'Segoe UI', Arial, sans-serif;    /* body: paragraphs, captions, long-form */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--sans); color: #4A4A4A; background: #FFFFFF; line-height: 1.7; }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 40px 50px; }
+
+  /* Cover */
+  .cover { background: #0F1B2D; color: #FFFFFF; padding: 120px 60px 80px; text-align: left; }
+  .cover .gold-line { width: 80px; height: 3px; background: #C9A24D; margin-bottom: 40px; }
+  .cover h1 { font-family: var(--display); font-size: 48px; font-weight: 700; letter-spacing: 4px; margin-bottom: 5px; }
+  .cover h1 .amp { color: #C9A24D; }
+  .cover .systems { font-family: var(--display); font-size: 14px; letter-spacing: 10px; color: #7A7A7A; margin-bottom: 50px; }
+  .cover .doc-title { font-family: var(--display); font-size: 28px; font-weight: 300; color: #C9A24D; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; }
+  .cover .version { font-size: 14px; color: #7A7A7A; }
+
+  /* Section headers */
+  .section { padding: 60px 0 20px; border-bottom: 2px solid #C9A24D; margin-bottom: 40px; }
+  .section h2 { font-family: var(--display); font-size: 28px; font-weight: 700; color: #0F1B2D; text-transform: uppercase; letter-spacing: 3px; }
+  .section .sub { font-size: 14px; color: #C9A24D; font-style: italic; margin-top: 6px; }
+
+  h3 { font-family: var(--display); font-size: 18px; font-weight: 700; color: #0F1B2D; margin: 30px 0 12px; }
+  p { margin-bottom: 16px; font-size: 15px; }
+
+  /* Color palette */
+  .colors { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin: 20px 0 40px; }
+  .color-card { border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .color-swatch { height: 100px; }
+  .color-info { padding: 14px 16px; background: #FAFAFA; }
+  .color-info .name { font-family: var(--display); font-weight: 700; font-size: 14px; color: #0F1B2D; }
+  .color-info .hex { font-family: var(--sans); font-size: 13px; color: #7A7A7A; margin-top: 2px; }
+  .color-info .usage { font-size: 12px; color: #7A7A7A; margin-top: 6px; line-height: 1.4; }
+
+  /* Typography showcase */
+  .type-sample { background: #FAFAFA; border-left: 3px solid #C9A24D; padding: 20px 24px; margin: 12px 0; border-radius: 0 6px 6px 0; }
+  .type-sample .label { font-family: var(--display); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #C9A24D; margin-bottom: 8px; }
+
+  /* Logo usage */
+  .logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+  .logo-box { padding: 40px 30px; border-radius: 8px; text-align: center; font-family: var(--display); }
+  .logo-box .wordmark { font-size: 26px; font-weight: 700; letter-spacing: 3px; }
+  .logo-box .sys { font-size: 10px; letter-spacing: 8px; margin-top: 4px; }
+
+  /* Do/Don't */
+  .dos-donts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+  .do-card, .dont-card { padding: 20px; border-radius: 8px; font-size: 14px; }
+  .do-card { background: #F0F7F0; border-left: 4px solid #3A7D44; }
+  .dont-card { background: #FDF0F0; border-left: 4px solid #C0392B; }
+  .do-card .tag, .dont-card .tag { font-family: var(--display); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+  .do-card .tag { color: #3A7D44; }
+  .dont-card .tag { color: #C0392B; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 30px; font-size: 14px; }
+  th { background: #0F1B2D; color: #FFFFFF; font-family: var(--display); text-align: left; padding: 12px 16px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+  td { padding: 10px 16px; border-bottom: 1px solid #E8E8E8; }
+  tr:nth-child(even) td { background: #FAFAFA; }
+
+  /* Voice cards */
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+  .voice-card { border: 1px solid #E8E8E8; border-radius: 8px; padding: 24px; }
+  .voice-card .trait { font-family: var(--display); font-weight: 700; color: #0F1B2D; font-size: 16px; margin-bottom: 8px; }
+  .voice-card .gold-dot { display: inline-block; width: 8px; height: 8px; background: #C9A24D; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+
+  /* Technical / code inline treatment */
+  code, .mono { font-family: var(--sans); font-size: 0.92em; color: #0F1B2D; }
+  strong, b { font-family: var(--display); font-weight: 600; color: #0F1B2D; }
+
+  .footer { text-align: center; padding: 40px 0; color: #7A7A7A; font-size: 13px; border-top: 1px solid #E8E8E8; margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="gold-line"></div>
+  <h1>CAMBER <span class="amp">&amp;</span> CORE</h1>
+  <div class="systems">S Y S T E M S</div>
+  <div class="doc-title">Brand Style Guide</div>
+  <div class="version">Version 2.1 &nbsp;&middot;&nbsp; June 2026</div>
+</div>
+
+<div class="page">
+
+<!-- 1. BRAND OVERVIEW -->
+<div class="section">
+  <h2>Brand Overview</h2>
+  <div class="sub">Who we are and what we stand for</div>
+</div>
+
+<h3>Company</h3>
+<p><strong>Camber &amp; Core Systems</strong> builds geospatial systems, LiDAR solutions, and custom software that help local governments make smarter decisions and deliver safer communities. Based in Victoria, BC, we serve municipalities and government agencies across British Columbia.</p>
+
+<h3>Tagline</h3>
+<p style="font-size: 22px; color: #C9A24D; font-style: italic; margin: 10px 0 30px;">"Secure Local Intelligence."</p>
+
+<h3>Brand Positioning</h3>
+<p>We sit at the intersection of geospatial expertise and modern software engineering. Our brand communicates technical authority, public-sector trustworthiness, and quiet confidence: professional enough for government procurement, modern enough to signal innovation.</p>
+
+
+<!-- 2. COLOR PALETTE -->
+<div class="section">
+  <h2>Color Palette</h2>
+  <div class="sub">Primary and supporting brand colors</div>
+</div>
+
+<div class="colors">
+  <div class="color-card">
+    <div class="color-swatch" style="background: #0F1B2D;"></div>
+    <div class="color-info">
+      <div class="name">Primary Navy</div>
+      <div class="hex">#0F1B2D</div>
+      <div class="usage">Logo, headings, primary text, header backgrounds</div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: #C9A24D;"></div>
+    <div class="color-info">
+      <div class="name">Primary Gold</div>
+      <div class="hex">#C9A24D</div>
+      <div class="usage">Ampersand, accents, dividers, CTAs, highlights</div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: #4A4A4A;"></div>
+    <div class="color-info">
+      <div class="name">Dark Gray</div>
+      <div class="hex">#4A4A4A</div>
+      <div class="usage">Body text in documents and print</div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: #7A7A7A;"></div>
+    <div class="color-info">
+      <div class="name">Medium Gray</div>
+      <div class="hex">#7A7A7A</div>
+      <div class="usage">Secondary text, captions, metadata</div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: #D4B96A;"></div>
+    <div class="color-info">
+      <div class="name">Light Gold</div>
+      <div class="hex">#D4B96A</div>
+      <div class="usage">Decorative lines, subtle accents, table borders</div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #E8E8E8;"></div>
+    <div class="color-info">
+      <div class="name">White</div>
+      <div class="hex">#FFFFFF</div>
+      <div class="usage">Page backgrounds, reversed text on dark</div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: #0B1426;"></div>
+    <div class="color-info">
+      <div class="name">Dark Background</div>
+      <div class="hex">#0B1426</div>
+      <div class="usage">Website backgrounds, dark-mode contexts</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 3. TYPOGRAPHY -->
+<div class="section">
+  <h2>Typography</h2>
+  <div class="sub">Fonts, weights, and sizing</div>
+</div>
+
+<h3>Primary Display Typeface: Raleway</h3>
+<p>Raleway is the brand's primary display typeface, used for the logo wordmark, all headings, and labels. Its elegant, geometric letterforms give the spaced uppercase wordmark and section headings a confident, refined character, and they hold up especially well in the wide-tracked capitals of the logo and section titles. Raleway is free and open-source (Google Fonts): it embeds cleanly on the web and is free to install for Office and print, so the same display type renders across the website, proposals, resumes, and documents. Weights in use: Light (300), Regular (400), SemiBold (600), Bold (700), ExtraBold (800).</p>
+
+<div class="type-sample">
+  <div class="label">Heading 1 / 18pt / Bold / Navy</div>
+  <div style="font-family: 'Raleway', 'Segoe UI', Arial, sans-serif; font-size: 32px; font-weight: 700; color: #0F1B2D; letter-spacing: 0.5px;">Definitions &amp; Interpretation</div>
+</div>
+<div class="type-sample">
+  <div class="label">Heading 2 / 14pt / Bold / Navy</div>
+  <div style="font-family: 'Raleway', 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: 700; color: #0F1B2D;">General Obligations</div>
+</div>
+<div class="type-sample">
+  <div class="label">Heading 3 / 11.5pt / SemiBold / Gold</div>
+  <div style="font-family: 'Raleway', 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: 600; color: #C9A24D;">Subsection Title</div>
+</div>
+
+<h3>Body &amp; Long-Form Copy: Questrial</h3>
+<p>Body copy is set in Questrial, a clean geometric sans that pairs naturally with Raleway while staying highly readable in running text. Questrial ships in a single Regular (400) weight, so emphasis and hierarchy come from size, color, and the Raleway display face rather than heavier cuts of the same family. For dense, multi-page documents such as agreements and statements of work, hold body size at 10.5 to 11pt with generous line spacing (1.5 to 1.6) to keep long passages comfortable to read.</p>
+
+<div class="type-sample">
+  <div class="label">Body / 11pt / Regular / Dark Gray</div>
+  <div style="font-family: 'Questrial', 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #4A4A4A; line-height: 1.6;">We build the geospatial systems, LiDAR solutions, and custom software that help local governments make smarter decisions and deliver safer communities.</div>
+</div>
+
+<table>
+  <tr><th>Element</th><th>Font</th><th>Size</th><th>Weight</th><th>Color</th></tr>
+  <tr><td>Logo Wordmark</td><td>Raleway</td><td>14pt (28 half-pt)</td><td>Bold (700)</td><td>Navy / Gold</td></tr>
+  <tr><td>Heading 1</td><td>Raleway</td><td>18pt (36 half-pt)</td><td>Bold (700)</td><td>Navy #0F1B2D</td></tr>
+  <tr><td>Heading 2</td><td>Raleway</td><td>14pt (28 half-pt)</td><td>Bold (700)</td><td>Navy #0F1B2D</td></tr>
+  <tr><td>Heading 3</td><td>Raleway</td><td>11.5pt (23 half-pt)</td><td>SemiBold (600)</td><td>Gold #C9A24D</td></tr>
+  <tr><td>Body Text</td><td>Questrial</td><td>11pt (22 half-pt)</td><td>Regular (400)</td><td>Dark Gray #4A4A4A</td></tr>
+  <tr><td>Captions / Labels</td><td>Raleway</td><td>8pt (16 half-pt)</td><td>Medium (500)</td><td>Med Gray #7A7A7A</td></tr>
+</table>
+
+
+<!-- 4. LOGO USAGE -->
+<div class="section">
+  <h2>Logo Usage</h2>
+  <div class="sub">Approved treatments and guidelines</div>
+</div>
+
+<h3>Approved Color Combinations</h3>
+<div class="logo-grid">
+  <div class="logo-box" style="background: #FFFFFF; border: 1px solid #E8E8E8;">
+    <div class="wordmark"><span style="color:#0F1B2D;">CAMBER</span> <span style="color:#C9A24D;">&amp;</span> <span style="color:#0F1B2D;">CORE</span></div>
+    <div class="sys" style="color:#7A7A7A;">S Y S T E M S</div>
+    <div style="margin-top:14px; font-size:11px; color:#7A7A7A;">Full color on white</div>
+  </div>
+  <div class="logo-box" style="background: #0F1B2D;">
+    <div class="wordmark"><span style="color:#FFFFFF;">CAMBER</span> <span style="color:#C9A24D;">&amp;</span> <span style="color:#FFFFFF;">CORE</span></div>
+    <div class="sys" style="color:#7A7A7A;">S Y S T E M S</div>
+    <div style="margin-top:14px; font-size:11px; color:#7A7A7A;">White + gold on navy</div>
+  </div>
+  <div class="logo-box" style="background: #F5F5F5;">
+    <div class="wordmark" style="color:#0F1B2D;">CAMBER <span style="color:#0F1B2D;">&amp;</span> CORE</div>
+    <div class="sys" style="color:#7A7A7A;">S Y S T E M S</div>
+    <div style="margin-top:14px; font-size:11px; color:#7A7A7A;">Single-color navy</div>
+  </div>
+  <div class="logo-box" style="background: #0B1426;">
+    <div class="wordmark" style="color:#FFFFFF;">CAMBER <span style="color:#FFFFFF;">&amp;</span> CORE</div>
+    <div class="sys" style="color:rgba(255,255,255,0.5);">S Y S T E M S</div>
+    <div style="margin-top:14px; font-size:11px; color:#7A7A7A;">All-white on dark</div>
+  </div>
+</div>
+
+<h3>Clear Space &amp; Minimum Size</h3>
+<p>Maintain a clear space around the logo equal to the height of the "&amp;" character on all sides. The minimum reproduction width for the full wordmark is 120px (digital) or 1.5 inches (print).</p>
+
+<h3>Do's and Don'ts</h3>
+<div class="dos-donts">
+  <div class="do-card">
+    <div class="tag">Do</div>
+    Use approved color combinations only
+  </div>
+  <div class="dont-card">
+    <div class="tag">Don't</div>
+    Stretch, skew, or rotate the logo
+  </div>
+  <div class="do-card">
+    <div class="tag">Do</div>
+    Maintain clear space around the logo
+  </div>
+  <div class="dont-card">
+    <div class="tag">Don't</div>
+    Add drop shadows, glows, or gradients
+  </div>
+  <div class="do-card">
+    <div class="tag">Do</div>
+    Use on clean, uncluttered backgrounds
+  </div>
+  <div class="dont-card">
+    <div class="tag">Don't</div>
+    Place on busy photos or patterned backgrounds
+  </div>
+  <div class="do-card">
+    <div class="tag">Do</div>
+    Keep the gold ampersand in full-color versions
+  </div>
+  <div class="dont-card">
+    <div class="tag">Don't</div>
+    Change the brand colors or substitute fonts
+  </div>
+</div>
+
+
+<!-- 5. DOCUMENT STANDARDS -->
+<div class="section">
+  <h2>Document Standards</h2>
+  <div class="sub">Templates and formatting conventions</div>
+</div>
+
+<h3>Letterhead</h3>
+<p>Header features the wordmark with tagline, a gold divider rule, and a contact bar (email, phone, website). Footer carries the address, company name, and page number separated by a thin gold rule. Standard margins: 1 inch all sides, with top margin at 1.67 inches to accommodate the header.</p>
+
+<h3>Corporate Documents (Agreements, SOWs)</h3>
+<p>Title page with gold accent lines, wordmark, document title, metadata block (date, version, classification), and confidentiality notice. Body pages carry a compact header (wordmark left, document title right) and footer (company + confidential left, website center, page right).</p>
+
+<h3>Section Heading Hierarchy</h3>
+<table>
+  <tr><th>Level</th><th>Style</th><th>Usage</th></tr>
+  <tr><td>H1</td><td>Raleway 18pt Bold, Navy, ALL CAPS</td><td>Major sections (Definitions, Terms, Execution)</td></tr>
+  <tr><td>H2</td><td>Raleway 14pt Bold, Navy</td><td>Subsections (General Obligations, Warranties)</td></tr>
+  <tr><td>H3</td><td>Raleway 11.5pt SemiBold, Gold</td><td>Sub-subsections, clause groupings</td></tr>
+</table>
+
+<h3>Footer Format</h3>
+<p>All document footers follow the pattern: <em>Address</em> (left) &nbsp;|&nbsp; <strong>Company Name</strong> (center, bold navy) &nbsp;|&nbsp; Page X (right). Separated from content by a thin gold rule.</p>
+
+
+<!-- 6. VOICE & TONE -->
+<div class="section">
+  <h2>Voice &amp; Tone</h2>
+  <div class="sub">How we communicate</div>
+</div>
+
+<div class="voice-grid">
+  <div class="voice-card">
+    <div class="trait"><span class="gold-dot"></span>Professional &amp; Confident</div>
+    <p style="font-size:13px;">We speak with authority earned through deep technical expertise. No hedging, no filler: clear, direct statements backed by data.</p>
+  </div>
+  <div class="voice-card">
+    <div class="trait"><span class="gold-dot"></span>Clear &amp; Accessible</div>
+    <p style="font-size:13px;">Technical precision without jargon overload. Government stakeholders and technical teams alike should immediately understand our message.</p>
+  </div>
+  <div class="voice-card">
+    <div class="trait"><span class="gold-dot"></span>Precise &amp; Factual</div>
+    <p style="font-size:13px;">We lead with specifics: numbers, metrics, outcomes. "75+ hours saved per project" not "significant time savings."</p>
+  </div>
+  <div class="voice-card">
+    <div class="trait"><span class="gold-dot"></span>Collaborative &amp; Responsive</div>
+    <p style="font-size:13px;">We partner with clients, not just deliver to them. Our tone reflects a trusted advisor who listens, adapts, and follows through.</p>
+  </div>
+</div>
+
+<h3>Context-Specific Guidance</h3>
+<table>
+  <tr><th>Context</th><th>Tone</th><th>Example</th></tr>
+  <tr><td>Government RFP / Proposal</td><td>Formal, precise, outcome-focused</td><td>"Our automated NG911 compliance solution reduces processing time by 80%."</td></tr>
+  <tr><td>Technical Documentation</td><td>Clear, structured, no ambiguity</td><td>"The pipeline ingests LiDAR point clouds in LAS format and outputs classified rasters."</td></tr>
+  <tr><td>Website / Marketing</td><td>Confident, approachable, modern</td><td>"Smarter decisions. Safer communities."</td></tr>
+  <tr><td>Client Correspondence</td><td>Warm, professional, action-oriented</td><td>"We've completed the initial data assessment and are ready to move into Phase 2."</td></tr>
+</table>
+
+
+<div class="footer">
+  Camber &amp; Core Systems &nbsp;&bull;&nbsp; Brand Style Guide v2.1 &nbsp;&bull;&nbsp; June 2026<br>
+  <span style="color:#C9A24D;">cambercore.ca</span>
+</div>
+
+</div>
+</body>
+</html>
