@@ -68,6 +68,7 @@ export default function AboutPage() {
       <section className="section team-section">
         <div className="container">
           <div className="section-heading section-heading--center">
+            <span className="eyebrow">Who you&apos;ll work with</span>
             <h2 className="section-title">Our team</h2>
             <hr className="gold-rule gold-rule--center" />
             <p>

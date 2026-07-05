@@ -202,9 +202,10 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                className="button button-primary contact-form__submit"
+                className="button button-primary button--cta contact-form__submit"
               >
-                Send message →
+                Send message
+                <span className="button__icon" aria-hidden="true">→</span>
               </button>
             </form>
           </div>

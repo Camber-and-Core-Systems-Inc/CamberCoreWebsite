@@ -208,6 +208,7 @@ export default function HomePage() {
       <section className="services-overview section">
         <div className="container">
           <div className="section-heading">
+            <span className="eyebrow">Services</span>
             <h2 className="section-title">What we do</h2>
             <hr className="gold-rule" />
           </div>
@@ -217,7 +218,9 @@ export default function HomePage() {
                 <div className="service-card__content">
                   <h3>{service.title}</h3>
                   <p>{service.description}</p>
-                  <Link href="/services">Learn more →</Link>
+                  <Link href="/services" className="text-link">
+                    Learn more <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               </article>
             ))}
@@ -231,6 +234,7 @@ export default function HomePage() {
       >
         <div className="container">
           <div className="section-heading">
+            <span className="eyebrow">Our work</span>
             <h2 className="section-title" id="featured-projects-heading">
               Featured projects
             </h2>
@@ -298,7 +302,10 @@ Report: ng911_conformance_2026.pdf`}</pre>
       <section className="about-teaser section-tight">
         <div className="container">
           <div className="about-teaser__grid">
-            <h2>Engineering precision for public service.</h2>
+            <div>
+              <span className="eyebrow">Who we are</span>
+              <h2>Smarter decisions. Safer communities.</h2>
+            </div>
             <div>
               <p>
                 Camber &amp; Core Systems is a Victoria, BC engineering firm
